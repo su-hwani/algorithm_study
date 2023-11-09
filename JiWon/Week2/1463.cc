@@ -6,7 +6,7 @@ int main(){
     int n;
     cin >> n;
 
-    int D[n+1];
+    int D[n+1] = {};
     D[1] = 0;
  
     for(int i = 2; i < n+1; i++){
