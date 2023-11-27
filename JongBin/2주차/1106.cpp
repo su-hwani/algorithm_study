@@ -11,7 +11,6 @@ int main()
     int n;
 
     cin >> c>>n;
-
     //도시의 개수 N, [n][0] :비용 , [n][1] : 증가 고객수
     int info[n][2];
     
