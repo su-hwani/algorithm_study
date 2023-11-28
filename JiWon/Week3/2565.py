@@ -13,3 +13,4 @@ for i in range(1, n):
             D[i] = max(D[i], D[j]+1)
 
 print(n - max(D)) # 구해준 LIS의 길이를 제외한 게 지워야하는 최소한의 전깃줄 개수
+
