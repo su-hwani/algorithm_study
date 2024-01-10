@@ -37,7 +37,7 @@ int main()
             dp[1][i] = max3(dp[0][i-1], dp[1][i-1], dp[2][i-1]);
             dp[2][i] = max2(dp[0][i-1], dp[1][i-1]) + arr[1][i];
             
-            // dp[0][i] = max2(dp[1][i-1], dp[1][i-1]) + arr[0][i];
+            
             // dp[0][i] = max2(dp[1][i-1], dp[1][i-2]) + arr[1][i];
             
         }
