@@ -36,9 +36,9 @@ int main()
                 dp[i][1] = -4;
             }
         }
-        else if (dp[i][1]==0)
+        else if (dp[i-1][1]==-3)
         {
-            if (arr[i] == arr[i-1])
+            if (arr[i] == arr[i-3])
             {
                 dp[i][0] = dp[i-1][0];
                 dp[i][1] = 0;
