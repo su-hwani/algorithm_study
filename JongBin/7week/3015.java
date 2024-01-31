@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+class Main {
 
     static int N;
     static Stack<Pair> stack = new Stack<>();

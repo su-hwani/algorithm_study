@@ -20,7 +20,7 @@ class Main{
             int stackSize = stack.size();
             if (stackSize>=boomLength){
                 boolean check = true;
-                for(int j =0 ; j <boomLength; j++){
+                for(int j = 0 ; j <boomLength; j++){
                     if (stack.get(stackSize - boomLength + j ) != boom.charAt(j)){
                         check = false;
                         break;
