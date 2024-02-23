@@ -1,81 +1,63 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 class Main{
-    static int N, M, size;
-    static int[] count, targetNum;
-    static ArrayList<Integer>[] list;
-    static Stack<Integer> stack = new Stack();
-    static HashSet<Integer> hs = new HashSet();
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        N = stoi(st.nextToken());
-        M = stoi(st.nextToken());
+        ArrayList<Integer>[] graph = new ArrayList[N+1];
+        int[] target = new int[M];
+        int[] inputCount = new int[M];
+        Boolean[] visited = new Boolean[N + 1];
+        for(int i=0; i<=N;i++){
+            visited[i] = false;
+            graph[i] = new ArrayList<>();
+        }
 
-        init();
 
-        for (int idx = 0; idx < M; idx++) {
+        for(int i= 0;i<M;i++){
             st = new StringTokenizer(br.readLine());
-            count[idx] = (size = stoi(st.nextToken()));
-            for (int i = 0; i < size; i++) {
-                list[stoi(st.nextToken())].add(idx);
-
+            int k = Integer.parseInt(st.nextToken());
+            inputCount[i] = k;
+            for (int j=0; j<k; j++){
+                graph[Integer.parseInt(st.nextToken())].add(i);
             }
-            targetNum[idx] = stoi(st.nextToken());
+            target[i] = Integer.parseInt(st.nextToken());
         }
-
+        int L = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        size = stoi(st.nextToken());
-
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < size; i++) {
-            stack.add(stoi(st.nextToken()));
-            hs.add(stack.peek());
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i = 0 ; i<L; i++){
+            int y = Integer.parseInt(st.nextToken());
+            queue.add(y);
+            visited[y]= true;
         }
-
-        topology();
-
-        System.out.println(findResult());
-    }
-
-    private static void topology() {
-        while (!stack.isEmpty()) {
-            int now = stack.pop();
-            for (int next : list[now]) {
-                if (--count[next] == 0 && !hs.contains(targetNum[next])) {
-                    hs.add(targetNum[next]);
-                    stack.add(targetNum[next]);
+        while (!queue.isEmpty()){
+            int temp =queue.poll();
+            for(int next : graph[temp]){
+                if( --inputCount[next] ==0 && (!visited[target[next]])){
+                    visited[target[next]] = true;
+                    queue.add(target[next]);
                 }
             }
         }
-    }
-
-    private static String findResult() {
+        int count = 0;
         StringBuilder sb = new StringBuilder();
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        pq.addAll(hs);
-        size = pq.size();
-        while (!pq.isEmpty()) {
-            sb.append(pq.poll() + " ");
+        for(int i = 1; i<=N;i++){
+            if(visited[i]){
+                count++;
+                sb.append(i).append(" ");
+            }
         }
-        return size + "\n" + sb.toString();
-    }
-
-    private static void init() {
-        targetNum = new int[M];
-        count = new int[M];
-        list = new ArrayList[N + 1];
-        for (int i = 1; i <= N; i++) {
-            list[i] = new ArrayList<>();
-        }
-    }
-
-    private static int stoi(String input) {
-        return Integer.parseInt(input);
+        System.out.println(count);
+        System.out.println(sb);
     }
 }
