@@ -1,6 +1,6 @@
 const fs = require('fs');
-// const stdin = fs.readFileSync('/dev/stdin').toString().split('\n');
-const stdin = fs.readFileSync('JongBin/막 푼것/index.txt').toString().trim().split('\n');
+const stdin = fs.readFileSync('/dev/stdin').toString().split('\n');
+// const stdin = fs.readFileSync('JongBin/막 푼것/index.txt').toString().trim().split('\n');
 
 let arr = [];
 let sum= 0;
