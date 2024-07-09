@@ -1,6 +1,6 @@
 const fs = require('fs');
-// const stdin = fs.readFileSync('/dev/stdin').toString().split('\n');
-const stdin = fs.readFileSync('JongBin/22week/index.txt').toString().trim().split('\n');
+const stdin = fs.readFileSync('/dev/stdin').toString().split('\n');
+// const stdin = fs.readFileSync('JongBin/22week/index.txt').toString().trim().split('\n');
 let [N,M] = stdin.shift().split(" ").map(Number);
 const dx = [0,0,1,-1];
 const dy = [1,-1,0,0];
