@@ -1,6 +1,6 @@
 const fs = require('fs');
-// const stdin = fs.readFileSync('/dev/stdin').toString().split('\n');
-const stdin = fs.readFileSync('JongBin/22week/index.txt').toString().trim().split('\n');
+const stdin = fs.readFileSync('/dev/stdin').toString().split('\n');
+// const stdin = fs.readFileSync('JongBin/22week/index.txt').toString().trim().split('\n');
 
 let [T,W] = stdin.shift().split(" ").map(Number);
 const tree = Array(T+1);
