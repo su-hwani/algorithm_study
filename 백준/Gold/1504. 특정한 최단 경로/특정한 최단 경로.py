@@ -1,50 +1,53 @@
-import heapq
 import sys
 input = sys.stdin.readline
+
+N, E = map(int, input().split())
+
 INF = int(1e9)
 
-v, e = map(int, input().split())
-graph = [[] for _ in range(v + 1)]
+graph = [
+    [] for _ in range(N+1)
+]
 
-# 방향성 없는 그래프이므로 x, y일 때와 y, x일 때 모두 추가
-for _ in range(e):
-    x, y, cost = map(int, input().split())
-    graph[x].append((y, cost))
-    graph[y].append((x, cost))
+for _ in range(E):
+    start, end, value = map(int, input().split())
+    graph[start].append( (value, end) )
+    graph[end].append( (value, start) )
 
+M1, M2 = map(int, input().split())
 
-def dijkstra(start):
-    distance = [INF] * (v + 1)
-    q = []
-    heapq.heappush(q, (0, start))
-    distance[start] = 0
+import heapq 
 
-    while q:
-        dist, now = heapq.heappop(q)
-
-        if distance[now] < dist:
+def fun(start):
+    dist = [
+        INF for _ in range(N+1)
+    ] 
+    
+    heap = []
+    heapq.heappush(heap, (0, start))
+    dist[start] = 0
+    while heap:
+        cur_dist, cur_node = heapq.heappop(heap)
+        if dist[cur_node] < cur_dist:
             continue
+        for cost, new_end in graph[cur_node]:
+            new_dist = cur_dist + cost 
+            if new_dist < dist[new_end]:
+                dist[new_end] = new_dist
+                heapq.heappush(heap, (new_dist, new_end))
+    return dist 
 
-        for i in graph[now]:
-            cost = dist + i[1]
+dist1 = fun(1)   
 
-            if distance[i[0]] > cost:
-                distance[i[0]] = cost
-                heapq.heappush(q, (cost, i[0]))
+dist2 = fun(M1)
 
-    # 반환값은 최단 거리 배열
-    return distance
+dist3 = fun(M2)  
 
+path1 = dist1[M1] + dist2[M2] + dist3[N]
+path2 = dist1[M2] + dist3[M1] + dist2[N]
 
-v1, v2 = map(int, input().split())
+# print(path1, path2)
+# print(f"dist1[M1]: {dist1[M1]}, dist2[M2]: {dist2[M2]}, dist3[N]: {dist3[N]}, dist1[M2]: {dist1[M2]}, dist3[M1]: {dist3[M1]}, dist2[N]: {dist2[N]}")
+result = min(path1, path2)
 
-# 출발점이 각각 1, v1, v2일 때의 최단 거리 배열
-original_distance = dijkstra(1)
-v1_distance = dijkstra(v1)
-v2_distance = dijkstra(v2)
-
-v1_path = original_distance[v1] + v1_distance[v2] + v2_distance[v]
-v2_path = original_distance[v2] + v2_distance[v1] + v1_distance[v]
-
-result = min(v1_path, v2_path)
-print(result if result < INF else -1)
+print(result if result < 10**9 else -1)
