@@ -9,5 +9,6 @@ def solution(phone_book):
         if pre_num == cur_num[:len(pre_num)]:
             answer = False
             break 
+    ## 
         
     return answer
