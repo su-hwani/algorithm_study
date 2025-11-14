@@ -1,40 +1,37 @@
-import java.util.*;
 class Solution {
     public int[] solution(int[] sequence, int k) {
         
-        int sequenceLength = sequence.length;
-        int start = sequenceLength - 1, end = sequenceLength - 1;
-        int cur = sequence[start];
-        int[] answer = {0, 0};
+        int startIdx = sequence.length - 1;
+        int endIdx = sequence.length - 1;
+        int sum = sequence[endIdx];
         
-        while (start >= 0) {
-            if (cur == k){
-                break;
-            } else if (cur > k) {
-                cur -= sequence[end];
-                end -= 1;
-            } else {
-                // cur < k
-                start -= 1;
-                cur += sequence[start];
-            }
-        }
+        System.out.println(sum);
         
-        if (sequence[start] == sequence[end]) {
-            int differ = end - start;
-            for (int i = start; i >= 0; i--) {
-                if (sequence[start] != sequence[i]) {
-                    start = i + 1;
-                    break;
+        while (sum != k) {
+            if (sum > k) {
+                if (endIdx == startIdx) {
+                    startIdx--;
+                    sum += sequence[startIdx];
                 }
-                start = i;
+                sum -= sequence[endIdx];
+                endIdx--;
+                
+            } else {
+                // sum < k
+                startIdx--;
+                sum += sequence[startIdx];
             }
-            end = start + differ;
+            
+        }
+        
+        while (sequence[startIdx] == sequence[endIdx] && startIdx != 0 && sequence[startIdx-1] == sequence[endIdx]) {
+            startIdx--;
+            endIdx--;
+            
         }
         
         
-        answer[0] = start;
-        answer[1] = end;
+        int[] answer = {startIdx, endIdx};
         return answer;
     }
 }
