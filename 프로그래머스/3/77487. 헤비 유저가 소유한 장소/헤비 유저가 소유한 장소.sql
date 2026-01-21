@@ -1,0 +1,2 @@
+-- 코드를 입력하세요
+SELECT ID, NAME, pl1.host_id as HOST_ID from places as pl1 join (select count(host_id) as cnt_host_id, host_id from places group by host_id) as pl2 on pl1.host_id = pl2.host_id where pl2.cnt_host_id >= 2;
